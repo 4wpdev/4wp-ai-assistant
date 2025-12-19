@@ -4,10 +4,10 @@
  *
  * Loads .env file and provides access to environment variables
  *
- * @package ForWP\LMS\AI\Core
+ * @package ForWP\AI\Core
  */
 
-namespace ForWP\LMS\AI\Core;
+namespace ForWP\AI\Core;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {

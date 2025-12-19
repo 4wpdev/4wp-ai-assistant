@@ -4,17 +4,18 @@
  *
  * Web interface for testing AI agent
  *
- * @package ForWP\LMS\AI\Admin
+ * @package ForWP\AI\Admin
  */
 
-namespace ForWP\LMS\AI\Admin;
+namespace ForWP\AI\Admin;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\LMS\AI\AI\ProviderManager;
+use ForWP\AI\AI\ProviderManager;
+use ForWP\AI\RAG\RAGEngine;
 
 class TestPage
 {
@@ -26,7 +27,7 @@ class TestPage
 		// Enqueue styles
 		self::enqueueStyles();
 		// Handle form submission
-		if (isset($_POST['lms4wp_ai_test']) && check_admin_referer('lms4wp_ai_test')) {
+		if (isset($_POST['4wp_ai_test']) && check_admin_referer('4wp_ai_test')) {
 			$message = sanitize_text_field($_POST['message'] ?? '');
 			$provider_id = sanitize_text_field($_POST['provider'] ?? '');
 			$result = self::handleTest($message, $provider_id);
@@ -37,49 +38,49 @@ class TestPage
 		$active_provider = ProviderManager::getActiveProvider();
 		$active_provider_id = array_search($active_provider, $providers);
 		?>
-		<div class="wrap lms4wp-ai-wrap">
-			<div class="lms4wp-ai-header">
-				<h1 class="lms4wp-ai-title">
+		<div class="wrap wp-ai-assistant-wrap">
+			<div class="wp-ai-assistant-header">
+				<h1 class="wp-ai-assistant-title">
 					<span class="dashicons dashicons-robot"></span>
-					<?php esc_html_e('AI Assistant', 'lms4wp-ai'); ?>
+					<?php esc_html_e('AI Assistant', '4wp-ai-assistant'); ?>
 				</h1>
-				<p class="lms4wp-ai-description"><?php esc_html_e('Test and interact with AI providers (Groq, RunPod, OpenRouter)', 'lms4wp-ai'); ?></p>
+				<p class="wp-ai-assistant-description"><?php esc_html_e('Test and interact with AI providers (Groq, RunPod, OpenRouter)', '4wp-ai-assistant'); ?></p>
 			</div>
 
-			<div class="lms4wp-ai-status">
+			<div class="wp-ai-assistant-status">
 				<?php if (empty($configured_providers)): ?>
-					<div class="lms4wp-ai-alert lms4wp-ai-alert-error">
+					<div class="wp-ai-assistant-alert wp-ai-assistant-alert-error">
 						<span class="dashicons dashicons-warning"></span>
 						<div>
-							<strong><?php esc_html_e('No Providers Configured', 'lms4wp-ai'); ?></strong>
-							<p><?php esc_html_e('Please configure at least one AI provider in your .env file.', 'lms4wp-ai'); ?></p>
+							<strong><?php esc_html_e('No Providers Configured', '4wp-ai-assistant'); ?></strong>
+							<p><?php esc_html_e('Please configure at least one AI provider in your .env file.', '4wp-ai-assistant'); ?></p>
 						</div>
 					</div>
 				<?php else: ?>
-					<div class="lms4wp-ai-alert lms4wp-ai-alert-success">
+					<div class="wp-ai-assistant-alert wp-ai-assistant-alert-success">
 						<span class="dashicons dashicons-yes-alt"></span>
 						<div>
-							<strong><?php esc_html_e('Active Provider', 'lms4wp-ai'); ?>: <?php echo esc_html($active_provider->getName()); ?></strong>
+							<strong><?php esc_html_e('Active Provider', '4wp-ai-assistant'); ?>: <?php echo esc_html($active_provider->getName()); ?></strong>
 							<?php if (!$active_provider->isConfigured()): ?>
-								<p style="color: #d63638; margin: 5px 0 0 0;"><?php esc_html_e('Not configured', 'lms4wp-ai'); ?></p>
+								<p style="color: #d63638; margin: 5px 0 0 0;"><?php esc_html_e('Not configured', '4wp-ai-assistant'); ?></p>
 							<?php else: ?>
-								<p><?php esc_html_e('Ready to use', 'lms4wp-ai'); ?></p>
+								<p><?php esc_html_e('Ready to use', '4wp-ai-assistant'); ?></p>
 							<?php endif; ?>
 						</div>
 					</div>
 				<?php endif; ?>
 			</div>
 
-			<div class="lms4wp-ai-test-container">
-				<form method="post" action="" class="lms4wp-ai-form">
-					<?php wp_nonce_field('lms4wp_ai_test'); ?>
+			<div class="wp-ai-assistant-test-container">
+				<form method="post" action="" class="wp-ai-assistant-form">
+					<?php wp_nonce_field('4wp_ai_test'); ?>
 					
-					<div class="lms4wp-ai-form-group">
-						<label for="provider" class="lms4wp-ai-label">
+					<div class="wp-ai-assistant-form-group">
+						<label for="provider" class="wp-ai-assistant-label">
 							<span class="dashicons dashicons-admin-plugins"></span>
-							<?php esc_html_e('AI Provider', 'lms4wp-ai'); ?>
+							<?php esc_html_e('AI Provider', '4wp-ai-assistant'); ?>
 						</label>
-						<select id="provider" name="provider" class="lms4wp-ai-select">
+						<select id="provider" name="provider" class="wp-ai-assistant-select">
 							<?php foreach ($providers as $id => $provider): ?>
 								<option value="<?php echo esc_attr($id); ?>" 
 									<?php selected($id, $active_provider_id); ?>
@@ -87,67 +88,67 @@ class TestPage
 								>
 									<?php echo esc_html($provider->getName()); ?>
 									<?php if (!$provider->isConfigured()): ?>
-										(<?php esc_html_e('Not configured', 'lms4wp-ai'); ?>)
+										(<?php esc_html_e('Not configured', '4wp-ai-assistant'); ?>)
 									<?php endif; ?>
 								</option>
 							<?php endforeach; ?>
 						</select>
 					</div>
 
-					<div class="lms4wp-ai-form-group">
-						<label for="message" class="lms4wp-ai-label">
+					<div class="wp-ai-assistant-form-group">
+						<label for="message" class="wp-ai-assistant-label">
 							<span class="dashicons dashicons-edit"></span>
-							<?php esc_html_e('Your Message', 'lms4wp-ai'); ?>
+							<?php esc_html_e('Your Message', '4wp-ai-assistant'); ?>
 						</label>
 						<textarea 
 							id="message" 
 							name="message" 
 							rows="6" 
-							class="lms4wp-ai-textarea" 
+							class="wp-ai-assistant-textarea" 
 							required
-							placeholder="<?php esc_attr_e('Type your message to AI assistant...', 'lms4wp-ai'); ?>"
+							placeholder="<?php esc_attr_e('Type your message to AI assistant...', '4wp-ai-assistant'); ?>"
 						><?php echo isset($_POST['message']) ? esc_textarea($_POST['message']) : ''; ?></textarea>
 					</div>
 
-					<div class="lms4wp-ai-form-actions">
+					<div class="wp-ai-assistant-form-actions">
 						<button 
 							type="submit" 
-							name="lms4wp_ai_test" 
-							class="lms4wp-ai-button lms4wp-ai-button-primary"
+							name="4wp_ai_test" 
+							class="wp-ai-assistant-button wp-ai-assistant-button-primary"
 							<?php echo empty($configured_providers) ? 'disabled' : ''; ?>
 						>
 							<span class="dashicons dashicons-paperclip"></span>
-							<?php esc_html_e('Send to AI', 'lms4wp-ai'); ?>
+							<?php esc_html_e('Send to AI', '4wp-ai-assistant'); ?>
 						</button>
 					</div>
 				</form>
 
 				<?php if (isset($result)): ?>
-					<div class="lms4wp-ai-result">
-						<h2 class="lms4wp-ai-result-title">
+					<div class="wp-ai-assistant-result">
+						<h2 class="wp-ai-assistant-result-title">
 							<span class="dashicons dashicons-format-chat"></span>
-							<?php esc_html_e('AI Response', 'lms4wp-ai'); ?>
+							<?php esc_html_e('AI Response', '4wp-ai-assistant'); ?>
 						</h2>
 						
 						<?php if (is_wp_error($result)): ?>
-							<div class="lms4wp-ai-alert lms4wp-ai-alert-error">
+							<div class="wp-ai-assistant-alert wp-ai-assistant-alert-error">
 								<span class="dashicons dashicons-dismiss"></span>
 								<div>
-									<strong><?php esc_html_e('Error', 'lms4wp-ai'); ?></strong>
+									<strong><?php esc_html_e('Error', '4wp-ai-assistant'); ?></strong>
 									<p><?php echo esc_html($result->get_error_message()); ?></p>
 								</div>
 							</div>
 						<?php elseif (isset($result['success']) && $result['success']): ?>
-							<div class="lms4wp-ai-response">
-								<div class="lms4wp-ai-response-content">
+							<div class="wp-ai-assistant-response">
+								<div class="wp-ai-assistant-response-content">
 									<?php echo wp_kses_post(nl2br(esc_html($result['message']))); ?>
 								</div>
 								
 								<?php if (isset($result['usage'])): ?>
-									<details class="lms4wp-ai-usage">
+									<details class="wp-ai-assistant-usage">
 										<summary>
 											<span class="dashicons dashicons-info"></span>
-											<?php esc_html_e('Usage Details', 'lms4wp-ai'); ?>
+											<?php esc_html_e('Usage Details', '4wp-ai-assistant'); ?>
 										</summary>
 										<pre><?php echo esc_html(print_r($result['usage'], true)); ?></pre>
 									</details>
@@ -171,20 +172,23 @@ class TestPage
 	private static function handleTest(string $message, string $provider_id = ''): array|\WP_Error
 	{
 		if (empty($message)) {
-			return new \WP_Error('empty_message', __('Message cannot be empty.', 'lms4wp-ai'));
+			return new \WP_Error('empty_message', __('Message cannot be empty.', '4wp-ai-assistant'));
 		}
 
 		// Get provider
 		if (!empty($provider_id)) {
 			$provider = ProviderManager::getProvider($provider_id);
 			if (!$provider || !$provider->isConfigured()) {
-				return new \WP_Error('provider_not_configured', __('Selected provider is not configured.', 'lms4wp-ai'));
+				return new \WP_Error('provider_not_configured', __('Selected provider is not configured.', '4wp-ai-assistant'));
 			}
 		} else {
 			$provider = ProviderManager::getActiveProvider();
 		}
 
-		return $provider->sendMessage($message);
+		// Enhance message with RAG context
+		$enhanced_message = RAGEngine::enhanceMessage($message);
+
+		return $provider->sendMessage($enhanced_message);
 	}
 
 	/**
@@ -194,12 +198,12 @@ class TestPage
 	{
 		?>
 		<style>
-		.lms4wp-ai-wrap {
+		.wp-ai-assistant-wrap {
 			max-width: 900px;
 			margin: 20px 0;
 		}
 
-		.lms4wp-ai-header {
+		.wp-ai-assistant-header {
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 			color: #fff;
 			padding: 30px;
@@ -208,7 +212,7 @@ class TestPage
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		}
 
-		.lms4wp-ai-title {
+		.wp-ai-assistant-title {
 			margin: 0 0 10px 0;
 			font-size: 28px;
 			font-weight: 600;
@@ -217,23 +221,23 @@ class TestPage
 			gap: 10px;
 		}
 
-		.lms4wp-ai-title .dashicons {
+		.wp-ai-assistant-title .dashicons {
 			font-size: 32px;
 			width: 32px;
 			height: 32px;
 		}
 
-		.lms4wp-ai-description {
+		.wp-ai-assistant-description {
 			margin: 0;
 			opacity: 0.9;
 			font-size: 14px;
 		}
 
-		.lms4wp-ai-status {
+		.wp-ai-assistant-status {
 			margin-bottom: 30px;
 		}
 
-		.lms4wp-ai-alert {
+		.wp-ai-assistant-alert {
 			display: flex;
 			align-items: flex-start;
 			gap: 15px;
@@ -242,36 +246,36 @@ class TestPage
 			margin-bottom: 20px;
 		}
 
-		.lms4wp-ai-alert .dashicons {
+		.wp-ai-assistant-alert .dashicons {
 			font-size: 24px;
 			width: 24px;
 			height: 24px;
 			margin-top: 2px;
 		}
 
-		.lms4wp-ai-alert-success {
+		.wp-ai-assistant-alert-success {
 			background: #d1e7dd;
 			border-left: 4px solid #00a32a;
 			color: #0f5132;
 		}
 
-		.lms4wp-ai-alert-error {
+		.wp-ai-assistant-alert-error {
 			background: #f8d7da;
 			border-left: 4px solid #d63638;
 			color: #842029;
 		}
 
-		.lms4wp-ai-alert strong {
+		.wp-ai-assistant-alert strong {
 			display: block;
 			margin-bottom: 5px;
 		}
 
-		.lms4wp-ai-alert p {
+		.wp-ai-assistant-alert p {
 			margin: 0;
 			font-size: 13px;
 		}
 
-		.lms4wp-ai-test-container {
+		.wp-ai-assistant-test-container {
 			background: #fff;
 			border: 1px solid #c3c4c7;
 			border-radius: 8px;
@@ -279,11 +283,11 @@ class TestPage
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 		}
 
-		.lms4wp-ai-form-group {
+		.wp-ai-assistant-form-group {
 			margin-bottom: 25px;
 		}
 
-		.lms4wp-ai-label {
+		.wp-ai-assistant-label {
 			display: flex;
 			align-items: center;
 			gap: 8px;
@@ -292,15 +296,15 @@ class TestPage
 			color: #1d2327;
 		}
 
-		.lms4wp-ai-label .dashicons {
+		.wp-ai-assistant-label .dashicons {
 			font-size: 18px;
 			width: 18px;
 			height: 18px;
 			color: #2271b1;
 		}
 
-		.lms4wp-ai-select,
-		.lms4wp-ai-textarea {
+		.wp-ai-assistant-select,
+		.wp-ai-assistant-textarea {
 			width: 100%;
 			padding: 12px;
 			border: 1px solid #8c8f94;
@@ -310,23 +314,23 @@ class TestPage
 			transition: border-color 0.2s;
 		}
 
-		.lms4wp-ai-select:focus,
-		.lms4wp-ai-textarea:focus {
+		.wp-ai-assistant-select:focus,
+		.wp-ai-assistant-textarea:focus {
 			outline: none;
 			border-color: #2271b1;
 			box-shadow: 0 0 0 1px #2271b1;
 		}
 
-		.lms4wp-ai-textarea {
+		.wp-ai-assistant-textarea {
 			resize: vertical;
 			min-height: 120px;
 		}
 
-		.lms4wp-ai-form-actions {
+		.wp-ai-assistant-form-actions {
 			margin-top: 25px;
 		}
 
-		.lms4wp-ai-button {
+		.wp-ai-assistant-button {
 			display: inline-flex;
 			align-items: center;
 			gap: 8px;
@@ -340,28 +344,28 @@ class TestPage
 			text-decoration: none;
 		}
 
-		.lms4wp-ai-button .dashicons {
+		.wp-ai-assistant-button .dashicons {
 			font-size: 18px;
 			width: 18px;
 			height: 18px;
 		}
 
-		.lms4wp-ai-button-primary {
+		.wp-ai-assistant-button-primary {
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 			color: #fff;
 		}
 
-		.lms4wp-ai-button-primary:hover:not(:disabled) {
+		.wp-ai-assistant-button-primary:hover:not(:disabled) {
 			transform: translateY(-1px);
 			box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
 		}
 
-		.lms4wp-ai-button-primary:disabled {
+		.wp-ai-assistant-button-primary:disabled {
 			opacity: 0.5;
 			cursor: not-allowed;
 		}
 
-		.lms4wp-ai-result {
+		.wp-ai-assistant-result {
 			margin-top: 30px;
 			background: #fff;
 			border: 1px solid #c3c4c7;
@@ -370,7 +374,7 @@ class TestPage
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 		}
 
-		.lms4wp-ai-result-title {
+		.wp-ai-assistant-result-title {
 			display: flex;
 			align-items: center;
 			gap: 10px;
@@ -379,30 +383,30 @@ class TestPage
 			color: #1d2327;
 		}
 
-		.lms4wp-ai-result-title .dashicons {
+		.wp-ai-assistant-result-title .dashicons {
 			color: #2271b1;
 		}
 
-		.lms4wp-ai-response {
+		.wp-ai-assistant-response {
 			background: #f6f7f7;
 			border-radius: 6px;
 			padding: 20px;
 		}
 
-		.lms4wp-ai-response-content {
+		.wp-ai-assistant-response-content {
 			line-height: 1.6;
 			color: #1d2327;
 			white-space: pre-wrap;
 			word-wrap: break-word;
 		}
 
-		.lms4wp-ai-usage {
+		.wp-ai-assistant-usage {
 			margin-top: 20px;
 			border-top: 1px solid #c3c4c7;
 			padding-top: 15px;
 		}
 
-		.lms4wp-ai-usage summary {
+		.wp-ai-assistant-usage summary {
 			display: flex;
 			align-items: center;
 			gap: 8px;
@@ -412,17 +416,17 @@ class TestPage
 			user-select: none;
 		}
 
-		.lms4wp-ai-usage summary:hover {
+		.wp-ai-assistant-usage summary:hover {
 			color: #135e96;
 		}
 
-		.lms4wp-ai-usage .dashicons {
+		.wp-ai-assistant-usage .dashicons {
 			font-size: 16px;
 			width: 16px;
 			height: 16px;
 		}
 
-		.lms4wp-ai-usage pre {
+		.wp-ai-assistant-usage pre {
 			background: #1d2327;
 			color: #f0f0f1;
 			padding: 15px;

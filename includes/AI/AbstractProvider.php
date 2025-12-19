@@ -4,10 +4,10 @@
  *
  * Base class for all AI providers
  *
- * @package ForWP\LMS\AI\AI
+ * @package ForWP\AI\AI
  */
 
-namespace ForWP\LMS\AI\AI;
+namespace ForWP\AI\AI;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -102,7 +102,7 @@ abstract class AbstractProvider implements ProviderInterface
 			return new \WP_Error(
 				'no_api_key',
 				sprintf(
-					__('%s API key is not configured. Please check your .env file.', 'lms4wp-ai'),
+					__('%s API key is not configured. Please check your .env file.', '4wp-ai-assistant'),
 					$provider_name
 				)
 			);
@@ -129,7 +129,7 @@ abstract class AbstractProvider implements ProviderInterface
 			$provider_name = method_exists($this, 'getName') ? $this->getName() : 'AI Provider';
 			return new \WP_Error(
 				'api_error',
-				$error_data['error']['message'] ?? sprintf(__('%s API error', 'lms4wp-ai'), $provider_name),
+				$error_data['error']['message'] ?? sprintf(__('%s API error', '4wp-ai-assistant'), $provider_name),
 				['status' => $response_code]
 			);
 		}

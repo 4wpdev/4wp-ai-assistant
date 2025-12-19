@@ -2,10 +2,10 @@
 /**
  * AI Provider Interface
  *
- * @package ForWP\LMS\AI\AI
+ * @package ForWP\AI\AI
  */
 
-namespace ForWP\LMS\AI\AI;
+namespace ForWP\AI\AI;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -44,4 +44,6 @@ interface ProviderInterface
 	 */
 	public function getAvailableModels(): array;
 }
+
+
 

@@ -4,20 +4,20 @@
  *
  * Manages AI providers and selects active one
  *
- * @package ForWP\LMS\AI\AI
+ * @package ForWP\AI\AI
  */
 
-namespace ForWP\LMS\AI\AI;
+namespace ForWP\AI\AI;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\LMS\AI\AI\Providers\GroqProvider;
-use ForWP\LMS\AI\AI\Providers\RunPodProvider;
-use ForWP\LMS\AI\AI\Providers\OpenRouterProvider;
-use ForWP\LMS\AI\Core\EnvLoader;
+use ForWP\AI\AI\Providers\GroqProvider;
+use ForWP\AI\AI\Providers\RunPodProvider;
+use ForWP\AI\AI\Providers\OpenRouterProvider;
+use ForWP\AI\Core\EnvLoader;
 
 class ProviderManager
 {

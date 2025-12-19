@@ -2,18 +2,18 @@
 /**
  * OpenRouter Provider
  *
- * @package ForWP\LMS\AI\AI\Providers
+ * @package ForWP\AI\AI\Providers
  */
 
-namespace ForWP\LMS\AI\AI\Providers;
+namespace ForWP\AI\AI\Providers;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\LMS\AI\AI\AbstractProvider;
-use ForWP\LMS\AI\Core\EnvLoader;
+use ForWP\AI\AI\AbstractProvider;
+use ForWP\AI\Core\EnvLoader;
 
 class OpenRouterProvider extends AbstractProvider
 {

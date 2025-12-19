@@ -2,18 +2,18 @@
 /**
  * RunPod Provider
  *
- * @package ForWP\LMS\AI\AI\Providers
+ * @package ForWP\AI\AI\Providers
  */
 
-namespace ForWP\LMS\AI\AI\Providers;
+namespace ForWP\AI\AI\Providers;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\LMS\AI\AI\AbstractProvider;
-use ForWP\LMS\AI\Core\EnvLoader;
+use ForWP\AI\AI\AbstractProvider;
+use ForWP\AI\Core\EnvLoader;
 
 class RunPodProvider extends AbstractProvider
 {
@@ -151,7 +151,7 @@ class RunPodProvider extends AbstractProvider
 		if (empty($this->getApiUrl())) {
 			return new \WP_Error(
 				'no_endpoint',
-				__('RunPod endpoint ID is not configured. Please set RUNPOD_ENDPOINT_ID in .env file.', 'lms4wp-ai')
+				__('RunPod endpoint ID is not configured. Please set RUNPOD_ENDPOINT_ID in .env file.', '4wp-ai-assistant')
 			);
 		}
 

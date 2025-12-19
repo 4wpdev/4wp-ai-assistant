@@ -2,10 +2,10 @@
 /**
  * Admin Menu
  *
- * @package ForWP\LMS\AI\Admin
+ * @package ForWP\AI\Admin
  */
 
-namespace ForWP\LMS\AI\Admin;
+namespace ForWP\AI\Admin;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -28,28 +28,55 @@ class Menu
 	 */
 	public function addMenu(): void
 	{
-		// Check if parent menu exists
-		if (!menu_page_url('lms4wp', false)) {
-			// If parent menu doesn't exist, create our own top-level menu
+		// Check if LMS4WP parent menu exists (optional integration)
+		if (function_exists('wp_ai_assistant_has_lms4wp') && wp_ai_assistant_has_lms4wp() && menu_page_url('lms4wp', false)) {
+			// Add as submenu to LMS4WP if it exists
+			$parent_slug = 'lms4wp';
+			$main_slug = '4wp-ai-assistant';
+		} else {
+			// Create our own top-level menu
+			$parent_slug = '4wp-ai-assistant';
+			$main_slug = '4wp-ai-assistant';
+			
 			add_menu_page(
-				__('LMS4WP AI', 'lms4wp-ai'),
-				__('LMS4WP AI', 'lms4wp-ai'),
+				__('4WP AI Assistant', '4wp-ai-assistant'),
+				__('AI Assistant', '4wp-ai-assistant'),
 				'manage_options',
-				'lms4wp-ai',
+				$parent_slug,
 				[TestPage::class, 'render'],
 				'dashicons-robot',
 				26.5
 			);
-		} else {
-			// Add as submenu to LMS4WP
-			add_submenu_page(
-				'lms4wp', // Parent menu (LMS4WP)
-				__('AI Assistant', 'lms4wp-ai'),
-				__('AI Assistant', 'lms4wp-ai'),
-				'manage_options',
-				'lms4wp-ai',
-				[TestPage::class, 'render']
-			);
 		}
+
+		// Main test page
+		add_submenu_page(
+			$parent_slug,
+			__('AI Chat', '4wp-ai-assistant'),
+			__('AI Chat', '4wp-ai-assistant'),
+			'manage_options',
+			$main_slug,
+			[TestPage::class, 'render']
+		);
+
+		// RAG Test page
+		add_submenu_page(
+			$parent_slug,
+			__('RAG Engine', '4wp-ai-assistant'),
+			__('RAG Engine', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-rag',
+			[RAGTestPage::class, 'render']
+		);
+
+		// RAG Settings page
+		add_submenu_page(
+			$parent_slug,
+			__('RAG Settings', '4wp-ai-assistant'),
+			__('RAG Settings', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-rag-settings',
+			[RAGSettingsPage::class, 'render']
+		);
 	}
 }

@@ -4,10 +4,10 @@
  *
  * Checks requirements and compatibility
  *
- * @package ForWP\LMS\AI\Core
+ * @package ForWP\AI\Core
  */
 
-namespace ForWP\LMS\AI\Core;
+namespace ForWP\AI\Core;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -28,7 +28,7 @@ class Extension
 			add_action('admin_notices', function () {
 				echo '<div class="notice notice-error"><p>';
 				printf(
-					esc_html__('LMS4WP AI requires PHP 8.0 or higher. You are running PHP %s.', 'lms4wp-ai'),
+					esc_html__('4WP AI Assistant requires PHP 8.0 or higher. You are running PHP %s.', '4wp-ai-assistant'),
 					esc_html(PHP_VERSION)
 				);
 				echo '</p></div>';
@@ -41,7 +41,7 @@ class Extension
 			add_action('admin_notices', function () {
 				echo '<div class="notice notice-error"><p>';
 				printf(
-					esc_html__('LMS4WP AI requires WordPress 6.0 or higher. You are running WordPress %s.', 'lms4wp-ai'),
+					esc_html__('4WP AI Assistant requires WordPress 6.0 or higher. You are running WordPress %s.', '4wp-ai-assistant'),
 					esc_html(get_bloginfo('version'))
 				);
 				echo '</p></div>';
