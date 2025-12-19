@@ -1,0 +1,29 @@
+{
+	"name": "4wpdev/lms4wp-ai",
+	"description": "AI integration for LMS4WP using multiple providers (Groq, RunPod, OpenRouter)",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "4wp.dev",
+			"email": "info@4wp.dev",
+			"homepage": "https://4wp.dev"
+		}
+	],
+	"require": {
+		"php": ">=8.0",
+		"vlucas/phpdotenv": "^5.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"ForWP\\LMS\\AI\\": "includes/"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"sort-packages": true
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}
+
