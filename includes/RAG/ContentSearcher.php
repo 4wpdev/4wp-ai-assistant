@@ -4,10 +4,10 @@
  *
  * Searches indexed content for RAG
  *
- * @package ForWP\AI\RAG
+ * @package ForWP\AIAssistant\RAG
  */
 
-namespace ForWP\AI\RAG;
+namespace ForWP\AIAssistant\RAG;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {

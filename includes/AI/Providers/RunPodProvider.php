@@ -2,18 +2,18 @@
 /**
  * RunPod Provider
  *
- * @package ForWP\AI\AI\Providers
+ * @package ForWP\AIAssistant\AI\Providers
  */
 
-namespace ForWP\AI\AI\Providers;
+namespace ForWP\AIAssistant\AI\Providers;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\AI\AI\AbstractProvider;
-use ForWP\AI\Core\EnvLoader;
+use ForWP\AIAssistant\AI\AbstractProvider;
+use ForWP\AIAssistant\Core\EnvLoader;
 
 class RunPodProvider extends AbstractProvider
 {

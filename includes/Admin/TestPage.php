@@ -4,18 +4,18 @@
  *
  * Web interface for testing AI agent
  *
- * @package ForWP\AI\Admin
+ * @package ForWP\AIAssistant\Admin
  */
 
-namespace ForWP\AI\Admin;
+namespace ForWP\AIAssistant\Admin;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-use ForWP\AI\AI\ProviderManager;
-use ForWP\AI\RAG\RAGEngine;
+use ForWP\AIAssistant\AI\ProviderManager;
+use ForWP\AIAssistant\RAG\RAGEngine;
 
 class TestPage
 {

@@ -2,10 +2,10 @@
 /**
  * AI Provider Interface
  *
- * @package ForWP\AI\AI
+ * @package ForWP\AIAssistant\AI
  */
 
-namespace ForWP\AI\AI;
+namespace ForWP\AIAssistant\AI;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {

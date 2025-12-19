@@ -1,6 +1,6 @@
 {
-	"name": "4wpdev/lms4wp-ai",
-	"description": "AI integration for LMS4WP using multiple providers (Groq, RunPod, OpenRouter)",
+	"name": "4wpdev/4wp-ai-assistant",
+	"description": "Universal AI assistant for WordPress with RAG capabilities. Supports multiple providers (Groq, RunPod, OpenRouter)",
 	"type": "wordpress-plugin",
 	"license": "MIT",
 	"authors": [
@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"ForWP\\LMS\\AI\\": "includes/"
+			"ForWP\\AIAssistant\\": "includes/"
 		}
 	},
 	"config": {

@@ -14,10 +14,10 @@
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
  *
- * @package ForWP\AI
+ * @package ForWP\AIAssistant
  */
 
-namespace ForWP\AI;
+namespace ForWP\AIAssistant;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -36,6 +36,11 @@ if (file_exists(WP_AI_ASSISTANT_PATH . 'vendor/autoload.php')) {
 	require_once WP_AI_ASSISTANT_PATH . 'vendor/autoload.php';
 }
 
+/**
+ * Check if LMS4WP plugin is active (optional integration)
+ *
+ * @return bool
+ */
 /**
  * Check if LMS4WP plugin is active (optional integration)
  *
@@ -118,10 +123,6 @@ class Plugin
 	private function loadDependencies(): void
 	{
 		$includes_dir = WP_AI_ASSISTANT_PATH . 'includes/';
-
-		// Core
-		require_once $includes_dir . 'Core/EnvLoader.php';
-		require_once $includes_dir . 'Core/Extension.php';
 
 		// AI Providers (Abstract first, then implementations)
 		require_once $includes_dir . 'AI/ProviderInterface.php';

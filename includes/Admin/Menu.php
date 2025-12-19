@@ -2,10 +2,10 @@
 /**
  * Admin Menu
  *
- * @package ForWP\AI\Admin
+ * @package ForWP\AIAssistant\Admin
  */
 
-namespace ForWP\AI\Admin;
+namespace ForWP\AIAssistant\Admin;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {

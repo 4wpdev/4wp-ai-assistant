@@ -4,10 +4,10 @@
  *
  * Checks requirements and compatibility
  *
- * @package ForWP\AI\Core
+ * @package ForWP\AIAssistant\Core
  */
 
-namespace ForWP\AI\Core;
+namespace ForWP\AIAssistant\Core;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
