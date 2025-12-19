@@ -124,6 +124,10 @@ class Plugin
 	{
 		$includes_dir = WP_AI_ASSISTANT_PATH . 'includes/';
 
+		// Core (load first)
+		require_once $includes_dir . 'Core/EnvLoader.php';
+		require_once $includes_dir . 'Core/Extension.php';
+
 		// AI Providers (Abstract first, then implementations)
 		require_once $includes_dir . 'AI/ProviderInterface.php';
 		require_once $includes_dir . 'AI/AbstractProvider.php';
