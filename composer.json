@@ -1,31 +1,29 @@
 {
-	"name": "4wpdev/4wp-ai-assistant",
-	"description": "Universal AI assistant for WordPress with RAG capabilities. Supports multiple providers (Groq, RunPod, OpenRouter)",
-	"type": "wordpress-plugin",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "4wp.dev",
-			"email": "info@4wp.dev",
-			"homepage": "https://4wp.dev"
-		}
-	],
-	"require": {
-		"php": ">=8.0",
-		"vlucas/phpdotenv": "^5.5"
-	},
-	"autoload": {
-		"psr-4": {
-			"ForWP\\AIAssistant\\": "includes/"
-		}
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"sort-packages": true
-	},
-	"minimum-stability": "stable",
-	"prefer-stable": true
+    "name": "4wpdev/4wp-ai-assistant",
+    "description": "Universal AI assistant for WordPress with RAG capabilities. Supports multiple providers (Groq, RunPod, OpenRouter)",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "4wp.dev",
+            "email": "info@4wp.dev",
+            "homepage": "https://4wp.dev"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "composer/installers": "^2.0",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ForWP\\AIAssistant\\": "includes/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
-
-
-
