@@ -89,6 +89,9 @@ class Plugin
 	 */
 	private function init(): void
 	{
+		// EnvLoader must exist before loadEnv() runs its fallback branch
+		require_once WP_AI_ASSISTANT_PATH . 'includes/Core/EnvLoader.php';
+
 		// Load .env file early
 		$this->loadEnv();
 
@@ -141,6 +144,9 @@ class Plugin
 		require_once $includes_dir . 'RAG/ContentIndexer.php';
 		require_once $includes_dir . 'RAG/ContentSearcher.php';
 		require_once $includes_dir . 'RAG/RAGEngine.php';
+		require_once $includes_dir . 'RAG/JobSkillsInstaller.php';
+		require_once $includes_dir . 'RAG/SkillDictionary.php';
+		require_once $includes_dir . 'RAG/JobExtractor.php';
 
 		// Admin
 		if (is_admin()) {
@@ -148,6 +154,12 @@ class Plugin
 			require_once $includes_dir . 'Admin/TestPage.php';
 			require_once $includes_dir . 'Admin/RAGTestPage.php';
 			require_once $includes_dir . 'Admin/RAGSettingsPage.php';
+			require_once $includes_dir . 'Admin/JobExtractorPage.php';
+			require_once $includes_dir . 'Admin/JobListPage.php';
+			require_once $includes_dir . 'Admin/SkillStatsPage.php';
+			require_once $includes_dir . 'Admin/SEOStrategyPage.php';
+			require_once $includes_dir . 'Admin/ResumePage.php';
+			require_once $includes_dir . 'Admin/RoadmapPage.php';
 		}
 	}
 
@@ -180,10 +192,16 @@ class Plugin
 		// Initialize admin
 		if (is_admin()) {
 			Admin\Menu::init();
+			Admin\JobExtractorPage::initAjax();
+			Admin\SEOStrategyPage::initAjax();
 		}
 
 		// Initialize RAG Engine
 		RAG\RAGEngine::init();
+
+		// Cleanup hooks (unconditional — deletion can happen outside wp-admin
+		// too, e.g. REST API or WP-CLI).
+		RAG\JobExtractor::init();
 	}
 }
 

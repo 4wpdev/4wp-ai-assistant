@@ -94,7 +94,7 @@ class EnvLoader
 
 	public static function getGroqModel(): string
 	{
-		return self::get('GROQ_MODEL', 'llama-3.1-8b-instant');
+		return self::get('GROQ_MODEL', 'openai/gpt-oss-120b');
 	}
 
 	public static function getRunPodApiKey(): ?string

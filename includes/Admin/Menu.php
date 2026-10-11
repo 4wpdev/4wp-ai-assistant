@@ -37,14 +37,14 @@ class Menu
 			// Create our own top-level menu
 			$parent_slug = '4wp-ai-assistant';
 			$main_slug = '4wp-ai-assistant';
-			
+
 			add_menu_page(
 				__('4WP AI Assistant', '4wp-ai-assistant'),
 				__('AI Assistant', '4wp-ai-assistant'),
 				'manage_options',
 				$parent_slug,
 				[TestPage::class, 'render'],
-				'dashicons-robot',
+				'dashicons-format-chat',
 				26.5
 			);
 		}
@@ -77,6 +77,66 @@ class Menu
 			'manage_options',
 			'4wp-ai-assistant-rag-settings',
 			[RAGSettingsPage::class, 'render']
+		);
+
+		// Job Extractor page
+		add_submenu_page(
+			$parent_slug,
+			__('Job Extractor', '4wp-ai-assistant'),
+			__('Job Extractor', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-job-extractor',
+			[JobExtractorPage::class, 'render']
+		);
+
+		// Job List page
+		add_submenu_page(
+			$parent_slug,
+			__('Extracted Vacancies', '4wp-ai-assistant'),
+			__('Extracted Vacancies', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-job-list',
+			[JobListPage::class, 'render']
+		);
+
+		// Skill Stats page
+		add_submenu_page(
+			$parent_slug,
+			__('Skill Frequency', '4wp-ai-assistant'),
+			__('Skill Frequency', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-skill-stats',
+			[SkillStatsPage::class, 'render']
+		);
+
+		// SEO Strategy page (Content Gap report)
+		add_submenu_page(
+			$parent_slug,
+			__('SEO Strategy', '4wp-ai-assistant'),
+			__('SEO Strategy', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-seo-strategy',
+			[SEOStrategyPage::class, 'render']
+		);
+
+		// Resume Generator page (placeholder — on hold)
+		add_submenu_page(
+			$parent_slug,
+			__('Resume — Coming Soon', '4wp-ai-assistant'),
+			__('Resume', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-resume',
+			[ResumePage::class, 'render']
+		);
+
+		// Roadmap page
+		add_submenu_page(
+			$parent_slug,
+			__('Roadmap', '4wp-ai-assistant'),
+			__('Roadmap', '4wp-ai-assistant'),
+			'manage_options',
+			'4wp-ai-assistant-roadmap',
+			[RoadmapPage::class, 'render']
 		);
 	}
 }

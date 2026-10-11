@@ -33,7 +33,7 @@ class ContentSearcher
 
 		foreach ($indexed as $item) {
 			$score = 0;
-			$text = mb_strtolower($item['title'] . ' ' . $item['content'] . ' ' . $item['excerpt']);
+			$text = mb_strtolower($item['title'] . ' ' . $item['content'] . ' ' . ($item['excerpt'] ?? ''));
 
 			// Simple relevance scoring
 			foreach ($query_words as $word) {
